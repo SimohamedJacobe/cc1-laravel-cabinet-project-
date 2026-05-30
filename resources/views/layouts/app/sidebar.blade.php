@@ -15,6 +15,12 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="calendar" :href="route('appointments.index')" :current="request()->routeIs('appointments.*')" wire:navigate>
+                        {{ __('Appointments') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="briefcase" :href="Route::has('services.index') ? route('services.index') : '#'" :current="request()->routeIs('services.*')" wire:navigate>
+                        {{ __('Services') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
@@ -30,6 +36,18 @@
                 </flux:sidebar.item>
             </flux:sidebar.nav>
 
+            <div class="hidden lg:block px-4 py-2 border-t border-zinc-200 dark:border-zinc-700">
+                <flux:dropdown class="w-full">
+                    <flux:button icon="globe-alt" variant="subtle" class="w-full justify-start">
+                        {{ strtoupper(app()->getLocale()) }}
+                    </flux:button>
+                    <flux:menu class="w-full">
+                        <flux:menu.item href="{{ route('locale.switch', 'en') }}">English</flux:menu.item>
+                        <flux:menu.item href="{{ route('locale.switch', 'fr') }}">Français</flux:menu.item>
+                    </flux:menu>
+                </flux:dropdown>
+            </div>
+            
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
 
@@ -38,6 +56,16 @@
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
             <flux:spacer />
+
+            <flux:dropdown class="mr-2">
+                <flux:button icon="globe-alt" variant="subtle" size="sm" square>
+                    {{ strtoupper(app()->getLocale()) }}
+                </flux:button>
+                <flux:menu class="w-32">
+                    <flux:menu.item href="{{ route('locale.switch', 'en') }}">English</flux:menu.item>
+                    <flux:menu.item href="{{ route('locale.switch', 'fr') }}">Français</flux:menu.item>
+                </flux:menu>
+            </flux:dropdown>
 
             <flux:dropdown position="top" align="end">
                 <flux:profile

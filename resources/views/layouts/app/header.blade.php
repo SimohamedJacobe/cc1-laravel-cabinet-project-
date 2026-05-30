@@ -13,6 +13,12 @@
                 <flux:navbar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Dashboard') }}
                 </flux:navbar.item>
+                <flux:navbar.item icon="calendar" :href="route('appointments.index')" :current="request()->routeIs('appointments.*')" wire:navigate>
+                    {{ __('Appointments') }}
+                </flux:navbar.item>
+                <flux:navbar.item icon="briefcase" :href="Route::has('services.index') ? route('services.index') : '#'" :current="request()->routeIs('services.*')" wire:navigate>
+                    {{ __('Services') }}
+                </flux:navbar.item>
             </flux:navbar>
 
             <flux:spacer />
@@ -41,7 +47,19 @@
                 </flux:tooltip>
             </flux:navbar>
 
-            <x-desktop-user-menu />
+            <div class="flex items-center gap-3">
+                <flux:dropdown>
+                    <flux:button icon="globe-alt" variant="subtle" class="[&>div>svg]:size-5" square>
+                        {{ strtoupper(app()->getLocale()) }}
+                    </flux:button>
+                    <flux:menu class="w-32">
+                        <flux:menu.item href="{{ route('locale.switch', 'en') }}">English</flux:menu.item>
+                        <flux:menu.item href="{{ route('locale.switch', 'fr') }}">Français</flux:menu.item>
+                    </flux:menu>
+                </flux:dropdown>
+
+                <x-desktop-user-menu />
+            </div>
         </flux:header>
 
         <!-- Mobile Menu -->
@@ -55,6 +73,12 @@
                 <flux:sidebar.group :heading="__('Platform')">
                     <flux:sidebar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard')  }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="calendar" :href="route('appointments.index')" :current="request()->routeIs('appointments.*')" wire:navigate>
+                        {{ __('Appointments')  }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="briefcase" :href="Route::has('services.index') ? route('services.index') : '#'" :current="request()->routeIs('services.*')" wire:navigate>
+                        {{ __('Services')  }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
